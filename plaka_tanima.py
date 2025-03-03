@@ -6,10 +6,10 @@ from ultralytics import YOLO
 
 app = Flask(__name__)
 
-# Tesseract OCR yolu (Windows için güncellendi)
+
 pytesseract.pytesseract.tesseract_cmd = r"C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
 
-# Eğitilmiş YOLO modelinin yolu (Senin kullanıcı adın eklendi)
+
 model_path = r"C:\\Users\\V1CTUS\\Desktop\\dataset\\training_results\\weights\\best.pt"
 model = YOLO(model_path)
 
@@ -19,10 +19,10 @@ def upload():
     file = request.files['image']
     image = cv2.imdecode(np.frombuffer(file.read(), np.uint8), cv2.IMREAD_COLOR)
 
-    # Görüntüyü griye çevir (OCR için daha iyi sonuç verebilir)
+    
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-    # YOLO ile plaka tespiti yap
+
     results = model(image)
 
     plates = []
@@ -30,9 +30,9 @@ def upload():
     for r in results:
         for box in r.boxes.xyxy:
             x1, y1, x2, y2 = map(int, box)
-            plate_img = gray[y1:y2, x1:x2]  # Plaka bölgesini kırp
+            plate_img = gray[y1:y2, x1:x2]  
 
-            # OCR ile plaka okuma
+            
             text = pytesseract.image_to_string(plate_img, config='--psm 8')
             plates.append(text.strip())
 
