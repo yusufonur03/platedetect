@@ -25,7 +25,7 @@ def upload():
 
             plate_img = image[y1:y2, x1:x2]
 
-            # OCR işlemi yapılacaksa buraya eklenebilir ancak sadece kare içine alacağız
+           
             cv2.rectangle(image, (x1, y1), (x2, y2), (0, 0, 255), 3)
 
     output_path = "detected_plate.jpg"
